@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.Image-size {
+  width: 400;
+  height: 400;
+}
