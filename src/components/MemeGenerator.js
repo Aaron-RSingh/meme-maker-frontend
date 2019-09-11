@@ -22,12 +22,16 @@ class MemeGenerator extends Component {
     return Math.random() * (max - min) + min;
   };
 
-  fetchImages = () => {
+  getImages = () => {
     fetch(`${urlForImages}/${this.randomNumber(1, 80)}`)
       .then(resp => resp.json())
       .then(
         randomImage => {
-          this.setState({ randomImage });
+          this.setState({
+            randomImage: randomImage,
+            bottomText: "Bottom Text",
+            topText: "Top Text"
+          });
         },
         () => {
           this.setState({
@@ -35,6 +39,14 @@ class MemeGenerator extends Component {
           });
         }
       );
+  };
+
+  postImage = imgData => {
+    return fetch("http://localhost:3000/user_images", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: { name: JSON.stringify(imgData), image_id: 1, user_id: 1 }
+    }).then(resp => console.log(resp));
   };
 
   handleChangeForm = event => {
@@ -54,6 +66,7 @@ class MemeGenerator extends Component {
     html2canvas(meme1, { useCORS: true }).then(canvas => {
       let imgData = canvas.toDataURL("image/png");
       console.log(imgData);
+      this.postImage(imgData);
     });
   };
 
