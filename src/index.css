@@ -68,11 +68,11 @@ header > p {
 }
 
 .meme > .bottom {
-  bottom: 0;
+  bottom: 10px;
 }
 
 .meme > .top {
-  top: 0;
+  top: 10px;
 }
 
 .meme-form {
