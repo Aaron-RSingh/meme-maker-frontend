@@ -1,18 +1,17 @@
-import React, { Component } from "react";
-import Text from "./containers/Text.js";
-import "./css/App.css";
+import React from "react";
+import MemeGenerator from "./components/MemeGenerator.js";
+import Header from "./components/Header.js";
+import logo from "./logo.svg";
+import image from "./test.png";
+import "./App.css";
 
-import Image from "./Image.js";
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Text></Text>
-        <Image className="image-size"></Image>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div>
+      <Header></Header>
+      <MemeGenerator></MemeGenerator>
+    </div>
+  );
 }
 
 export default App;
