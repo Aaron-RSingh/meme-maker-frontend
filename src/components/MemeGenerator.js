@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import html2canvas from "html2canvas";
-import Gallery from "./Gallery";
+import GalleryComponent from "./GalleryComponent";
 const urlForImages = "http://localhost:3000/images";
 
 class MemeGenerator extends Component {
@@ -55,7 +55,15 @@ class MemeGenerator extends Component {
     fetch("http://localhost:3000/user_images", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: imgData, image_id: 1, user_id: 1 })
+      body: JSON.stringify({
+        name: "lovely image",
+        image_id: 1,
+        user_id: 1,
+        src: imgData,
+        thumbnail: imgData,
+        thumbnail_width: 200,
+        thumbnail_width: 200
+      })
     })
       .then(resp => resp.json())
       .then(meme => {
@@ -121,7 +129,7 @@ class MemeGenerator extends Component {
           <h2 className="bottom">{this.state.bottomText}</h2>
         </div>
         <div className="all-memes">
-          <Gallery memes={this.state.allMemeImages} />
+          <GalleryComponent memes={this.state.allMemeImages} />
         </div>
       </div>
     );
