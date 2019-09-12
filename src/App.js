@@ -1,15 +1,20 @@
 import React from "react";
-import MemeGenerator from "./components/MemeGenerator.js";
-import Header from "./components/Header.js";
-import logo from "./logo.svg";
-import image from "./test.png";
+import MemeGenerator from "./components/MemeGenerator";
+import Header from "./components/Header";
 import "./App.css";
+import Gallery from "./components/Gallery";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div>
       <Header></Header>
-      <MemeGenerator></MemeGenerator>
+      <Router>
+        <NavBar />
+        <Route path="/" component={MemeGenerator} />
+        <Route path="/gallery" component={Gallery} />
+      </Router>
     </div>
   );
 }
