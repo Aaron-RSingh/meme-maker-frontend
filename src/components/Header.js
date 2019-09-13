@@ -1,6 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-function Header() {
+const Header = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -8,6 +9,6 @@ function Header() {
       </header>
     </div>
   );
-}
+};
 
 export default Header;

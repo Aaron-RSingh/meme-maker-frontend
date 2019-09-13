@@ -9,15 +9,13 @@ class MemeGenerator extends Component {
     this.state = {
       topText: "",
       bottomText: "",
-      randomImage: "",
-      allMemeImages: []
+      randomImage: ""
     };
     this.handleChangeForm = this.handleChangeForm.bind(this);
   }
 
   componentDidMount() {
     this.getImages();
-    this.getMemes();
   }
 
   randomNumber = (min, max) => {
@@ -27,47 +25,12 @@ class MemeGenerator extends Component {
   getImages = () => {
     fetch(`${urlForImages}/${this.randomNumber(1, 80)}`)
       .then(resp => resp.json())
-      .then(
-        randomImage => {
-          this.setState({
-            randomImage: randomImage,
-            bottomText: "Bottom Text",
-            topText: "Top Text"
-          });
-        },
-        () => {
-          this.setState({
-            requestFailed: true
-          });
-        }
-      );
-  };
-
-  getMemes = () => {
-    fetch("http://localhost:3000/user_images")
-      .then(resp => resp.json())
-      .then(allMemeImages => {
-        this.setState({ allMemeImages });
-      });
-  };
-
-  postImage = imgData => {
-    fetch("http://localhost:3000/user_images", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: "lovely image",
-        image_id: 1,
-        user_id: 1,
-        src: imgData,
-        thumbnail: imgData,
-        thumbnail_width: 200,
-        thumbnail_width: 200
-      })
-    })
-      .then(resp => resp.json())
-      .then(meme => {
-        this.setState({ allMemeImages: [...this.state.allMemeImages, meme] });
+      .then(randomImage => {
+        this.setState({
+          randomImage: randomImage,
+          bottomText: "Bottom Text",
+          topText: "Top Text"
+        });
       });
   };
 
@@ -81,55 +44,45 @@ class MemeGenerator extends Component {
     event.preventDefault();
   };
 
-  takeScreenshot = event => {
-    event.preventDefault();
-    let meme1 = document.querySelector(".meme");
-
-    html2canvas(meme1, { useCORS: true }).then(canvas => {
-      let imgData = canvas.toDataURL("image/png");
-      console.log(imgData);
-      this.postImage(imgData);
-    });
-  };
-
-  mapMemes = () => {
-    this.state.allMemeImages.map(meme => {
-      const memeSrc = meme.name;
-    });
-  };
-
   render() {
     return (
       <div>
-        <form onSubmit={this.takeScreenshot}>
-          <label>
-            Top Text
-            <input
-              name="topText"
-              type="text"
-              value={this.state.topText}
-              onChange={this.handleChangeForm}
-            />
-          </label>
-          <label>
-            Bottom Text
-            <input
-              name="bottomText"
-              type="text"
-              value={this.state.bottomText}
-              onChange={this.handleChangeForm}
-            />
-          </label>
-          <input type="submit" value="Take a screenshot!"></input>
-        </form>
+        <center>
+          <form>
+            <label>
+              Top Text
+              <input
+                name="topText"
+                type="text"
+                value={this.state.topText}
+                onChange={this.handleChangeForm}
+              />
+            </label>
+            <label>
+              Bottom Text
+              <input
+                name="bottomText"
+                type="text"
+                value={this.state.bottomText}
+                onChange={this.handleChangeForm}
+              />
+            </label>
+          </form>
+        </center>
+        <br></br>
+        <center>
+          <button className="example_a" onClick={this.getImages}>
+            Generate New Image
+          </button>
+          <button className="example_a" onClick={this.props.screenshot}>
+            Save to Gallery
+          </button>
+        </center>
+        <br></br>
         <div className="meme">
-          <button onClick={this.getImages}>Generate New Image</button>
           <img src={this.state.randomImage.download_url} alt="random" />
           <h2 className="top">{this.state.topText}</h2>
           <h2 className="bottom">{this.state.bottomText}</h2>
-        </div>
-        <div className="all-memes">
-          <GalleryComponent memes={this.state.allMemeImages} />
         </div>
       </div>
     );

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { Component } from "react";
 import Gallery from "react-grid-gallery";
 
-const GalleryComponent = props => {
-  return (
-    <div>
+class GalleryComponent extends Component {
+  render() {
+    return (
       <div>
-        <Gallery images={props.memes} />
+        <Gallery images={this.props.memes} />
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
+
 export default GalleryComponent;
